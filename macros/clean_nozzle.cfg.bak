@@ -1,0 +1,20 @@
+[gcode_macro clean_nozzle]
+gcode:
+  # Move to start position
+  G1 Y239 F9000
+  # Move down
+  G1 Z9.5 F5000 
+  # Wiggle Wiggle Wiggle
+  G1 X60 Y239
+  G1 X55 Y233 F8000
+  G1 X50 Y239
+  G1 X45 Y233 F8000
+  G1 X40 Y239
+  G1 X35 Y233 F8000
+  G1 Z11.5 X30 Y239
+  # go to front
+  G1 X170 Y225 Z11.5 F9000
+  # get ready to prime
+  #G1 Y50 Z0.2 F3000
+  # reset extension distance
+  G92 E0

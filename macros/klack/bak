@@ -1,0 +1,34 @@
+
+~STEPPER_Z~
+[stepper_z]
+step_pin: PA15
+dir_pin: PA8
+enable_pin: !PD1
+microsteps: 16
+rotation_distance: 40
+gear_ratio: 80:16
+full_steps_per_rotation: 200
+#endstop_pin: probe:z_virtual_endstop #COMMENT OUT OR REMOVE ALONG WITH ALL PROBE ENTRIES SAVED IN GREEN AT THE BOTTOM OF PRINTER.CFG
+endstop_pin: ^PC0 # PIN CHOSEN FOR SEXBOLT ON MAIN BOARD
+position_endstop: 4 # ROUGHLY MEASURE THE POSITION FROM THE TOP OF YOUR BUILD PLATE TO THE TOP OF THE SEXBOLT. SEXBOLT SHOULD BE NO HIGHER THAN 4MM
+position_min: -13 # SOME NUMBER BELOW ZERO
+position_max: 230
+homing_speed: 25
+homing_retract_dist: 5.0
+homing_retract_speed: 10
+second_homing_speed: 5
+
+~HOMING_OVERRIDE~
+[homing_override]
+set_position_z:0 # Make printer think Z axis is at zero, so we can force a move upwards away from build plate
+gcode:
+    G90
+    G1 Z10 F3000 ; move up to prevent accidentally scratching build plate    
+    G28 X
+    G28 Y
+    #PROBE_OUT #COMMENT OUT OR REMOVE AS IT IS NO LONGER NEEDED FOR HOMING
+    G1 X172 Y238 F6000 #THE POSITION IN X,Y OF YOUR NOZZLE OVER THE SEXBOLT
+    G28 Z #Z WILL NOW HOME ON THE SEXBOLT VIA THE NOZZLE
+    G1 Z6 F3000
+    G1 X0 Y0 F6000
+    #PROBE_IN #COMMENT OUT OR REMOVE
